@@ -17,6 +17,8 @@ class MainViewController: UIViewController {
         button.backgroundColor = .black
         return button
     }()
+    
+    var label = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +33,7 @@ class MainViewController: UIViewController {
     }
     
     @objc func pushController() {
-        let controller = ModalController()
+        let controller = CustomPickerController()
         controller.modalPresentationStyle = .overCurrentContext
         self.present(controller, animated: false)
     }

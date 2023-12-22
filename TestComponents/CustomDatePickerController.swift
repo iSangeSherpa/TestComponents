@@ -79,7 +79,7 @@ class DatePicker : UIPickerView {
     func selectedDate()->Int {
         dateCollection = buildDateCollection()
         var row = 0
-        for index in dateCollection.indices{
+        for index in dateCollection.indices {
             let today = Date()
             if Calendar.current.compare(today, to: dateCollection[index], toGranularity: .day) == .orderedSame{
                 row = index
@@ -89,7 +89,7 @@ class DatePicker : UIPickerView {
     }
 }
 
-extension DatePicker : UIPickerViewDelegate, UIPickerViewDataSource {
+extension DatePicker: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1;
     }
