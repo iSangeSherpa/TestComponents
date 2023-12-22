@@ -31,10 +31,10 @@ class MainViewController: UIViewController {
     }
     
     @objc func pushController() {
-        let controller = CustomDatePickerController()
-        self.navigationController?.pushViewController(controller, animated: true)
+        let controller = ModalController()
+        controller.modalPresentationStyle = .overCurrentContext
+        self.present(controller, animated: false)
     }
-
 
 }
 

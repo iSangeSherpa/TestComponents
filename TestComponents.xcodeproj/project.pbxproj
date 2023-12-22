@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		303FF30A81427CC878A0F4EA /* Pods_TestComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B541685A179714463D8D9255 /* Pods_TestComponents.framework */; };
+		3368A7B82B354EEA00B6591A /* CustomPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3368A7B72B354EEA00B6591A /* CustomPickerController.swift */; };
+		3368A7BA2B3568B400B6591A /* ModalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3368A7B92B3568B400B6591A /* ModalController.swift */; };
 		3374EBCF2B34326100EB24EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3374EBCE2B34326100EB24EF /* AppDelegate.swift */; };
 		3374EBD12B34326100EB24EF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3374EBD02B34326100EB24EF /* SceneDelegate.swift */; };
 		3374EBD32B34326100EB24EF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3374EBD22B34326100EB24EF /* MainViewController.swift */; };
@@ -36,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3368A7B72B354EEA00B6591A /* CustomPickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPickerController.swift; sourceTree = "<group>"; };
+		3368A7B92B3568B400B6591A /* ModalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalController.swift; sourceTree = "<group>"; };
 		3374EBCB2B34326100EB24EF /* TestComponents.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestComponents.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3374EBCE2B34326100EB24EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3374EBD02B34326100EB24EF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -119,6 +123,8 @@
 				3374EBD72B34326200EB24EF /* Assets.xcassets */,
 				3374EBDC2B34326200EB24EF /* Info.plist */,
 				3374EBFE2B3434CA00EB24EF /* CustomDatePickerController.swift */,
+				3368A7B72B354EEA00B6591A /* CustomPickerController.swift */,
+				3368A7B92B3568B400B6591A /* ModalController.swift */,
 			);
 			path = TestComponents;
 			sourceTree = "<group>";
@@ -322,6 +328,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3374EBD32B34326100EB24EF /* MainViewController.swift in Sources */,
+				3368A7BA2B3568B400B6591A /* ModalController.swift in Sources */,
+				3368A7B82B354EEA00B6591A /* CustomPickerController.swift in Sources */,
 				3374EBFF2B3434CA00EB24EF /* CustomDatePickerController.swift in Sources */,
 				3374EBCF2B34326100EB24EF /* AppDelegate.swift in Sources */,
 				3374EBD12B34326100EB24EF /* SceneDelegate.swift in Sources */,

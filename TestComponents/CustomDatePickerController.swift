@@ -67,7 +67,7 @@ extension CustomDatePickerController: UITextFieldDelegate {
 }
                                 
                                 
-    class DatePicker : UIPickerView {
+class DatePicker : UIPickerView {
     var dateCollection = [Date]()
     
     func buildDateCollection()->[Date] {
