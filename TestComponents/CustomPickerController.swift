@@ -20,14 +20,17 @@ class CustomPickerController: UIViewController {
     var picker = UIPickerView()
     var pickerDates = [Date]()
     
-    var defaultHeight: CGFloat = 200
+    var defaultHeight: CGFloat = 300
     
     var containerViewHeightConstraint: NSLayoutConstraint?
     var containerViewBottomConstraint: NSLayoutConstraint?
     
     lazy var stack: UIStackView = {
-        var stack = UIStackView(arrangedSubviews: [test])
-        
+        var stack = UIStackView(arrangedSubviews: [test, picker])
+        stack.axis = .vertical
+        stack.spacing = 20
+        stack.alignment = .center
+        stack.distribution = .fillProportionally
         return stack
     }()
     
@@ -67,7 +70,7 @@ class CustomPickerController: UIViewController {
         
         view.addSubview(dimmedView)
         view.addSubview(containerView)
-        containerView.addSubview(picker)
+        containerView.addSubview(stack)
     }
     
     func setupConstraints() {
@@ -87,7 +90,7 @@ class CustomPickerController: UIViewController {
         containerViewHeightConstraint?.isActive = true
         containerViewBottomConstraint?.isActive = true
         
-        picker.snp.makeConstraints { make in
+        stack.snp.makeConstraints { make in
             make.width.equalToSuperview()
             make.top.bottom.equalToSuperview().inset(20)
         }
@@ -111,9 +114,17 @@ extension CustomPickerController: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int { pickerDates.count }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        formatDate(date: pickerDates[row])
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        test.text = formatDate(date: pickerDates[row])
+    }
+    
+    func formatDate(date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "EE, MMM d, yyyy"
-        return formatter.string(from: pickerDates[row])
+        return formatter.string(from: date)
     }
 }
 
