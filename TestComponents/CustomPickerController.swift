@@ -8,14 +8,15 @@
 import Foundation
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
+import RxRelay
+
+class PickerViewModel {
+    var relay = BehaviorRelay<String>(value: "")
+}
 
 class CustomPickerController: UIViewController {
-    
-    var test: UILabel = {
-        var label = UILabel()
-        label.text = "TEST"
-        return label
-    }()
     
     var picker = UIPickerView()
     var pickerDates = [Date]()
@@ -25,8 +26,29 @@ class CustomPickerController: UIViewController {
     var containerViewHeightConstraint: NSLayoutConstraint?
     var containerViewBottomConstraint: NSLayoutConstraint?
     
+    let viewmodel = PickerViewModel()
+    
+    var testLabel: UILabel = {
+        var label = UILabel()
+        label.text = "TEST"
+        return label
+    }()
+    
+    var doneBtn: UIButton = {
+        var button = UIButton(type: .system)
+        button.setTitle("Done", for: .normal)
+        return button
+    }()
+    
+    lazy var topstack: UIStackView = {
+        var stack = UIStackView(arrangedSubviews: [UIView(), testLabel, doneBtn])
+        stack.axis = .horizontal
+        stack.distribution = .equalCentering
+        return stack
+    }()
+    
     lazy var stack: UIStackView = {
-        var stack = UIStackView(arrangedSubviews: [test, picker])
+        var stack = UIStackView(arrangedSubviews: [topstack, picker])
         stack.axis = .vertical
         stack.spacing = 20
         stack.alignment = .center
@@ -46,13 +68,14 @@ class CustomPickerController: UIViewController {
     var dimmedView: UIView = {
         var view = UIView()
         view.backgroundColor = .black
+        view.alpha = 0
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        animateView()
+        animateView(alpha: 0.6, duration: 0.5, constant: 0) {}
     }
     
     override func viewDidLoad() {
@@ -60,6 +83,7 @@ class CustomPickerController: UIViewController {
         pickerDates = getDateCollection()
         
         setupViews()
+        setupActions()
         setupConstraints()
     }
     
@@ -71,6 +95,14 @@ class CustomPickerController: UIViewController {
         view.addSubview(dimmedView)
         view.addSubview(containerView)
         containerView.addSubview(stack)
+    }
+    
+    func setupActions() {
+        doneBtn.addTarget(self, action: #selector(dismissPicker), for: .touchUpInside)
+        
+        viewmodel.relay
+            .bind(to: testLabel.rx.text)
+            .disposed(by: DisposeBag())
     }
     
     func setupConstraints() {
@@ -94,15 +126,25 @@ class CustomPickerController: UIViewController {
             make.width.equalToSuperview()
             make.top.bottom.equalToSuperview().inset(20)
         }
+        
+        topstack.snp.makeConstraints { make in
+            make.width.equalToSuperview().inset(10)
+        }
+    }
+    // this is a test
+    @objc func dismissPicker() {
+        animateView(alpha: 0, duration: 0.5, constant: 300, completion: { [weak self] in
+            self?.dismiss(animated: false)
+        })
     }
     
-    func animateView() {
-        dimmedView.alpha = 0
-        
-        UIView.animate(withDuration: 0.5, animations: { [self] in
-            self.dimmedView.alpha = 0.6
-            self.containerViewBottomConstraint?.constant = 0
+    func animateView(alpha: CGFloat, duration: TimeInterval, constant: CGFloat, completion: @escaping ()->()) {
+        UIView.animate(withDuration: duration, animations: { [self] in
+            self.dimmedView.alpha = alpha
+            self.containerViewBottomConstraint?.constant = constant
             self.view.layoutIfNeeded()
+        }, completion: { _ in
+            completion()
         })
     }
 }
@@ -118,7 +160,9 @@ extension CustomPickerController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        test.text = formatDate(date: pickerDates[row])
+        testLabel.text = formatDate(date: pickerDates[row])
+        
+        viewmodel.relay.accept(formatDate(date: pickerDates[row]))
     }
     
     func formatDate(date: Date) -> String {
